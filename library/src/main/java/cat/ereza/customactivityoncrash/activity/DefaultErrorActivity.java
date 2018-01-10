@@ -115,6 +115,19 @@ public final class DefaultErrorActivity extends AppCompatActivity {
             moreInfoButton.setVisibility(View.GONE);
         }
 
+        Button customActionButton = findViewById(R.id.customactivityoncrash_error_activity_custom_action_button);
+
+        if (config.getCustomActionListener() != null) {
+            customActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    config.getCustomActionListener().onCustomAction(DefaultErrorActivity.this);
+                }
+            });
+        } else {
+            customActionButton.setVisibility(View.GONE);
+        }
+
         Integer defaultErrorActivityDrawableId = config.getErrorDrawable();
         ImageView errorImageView = findViewById(R.id.customactivityoncrash_error_activity_image);
 

@@ -52,6 +52,7 @@ public class CaocConfig implements Serializable {
     private Class<? extends Activity> errorActivityClass = null;
     private Class<? extends Activity> restartActivityClass = null;
     private CustomActivityOnCrash.EventListener eventListener = null;
+    private CustomActivityOnCrash.CustomActionButtonListener customListener = null;
 
     @BackgroundMode
     public int getBackgroundMode() {
@@ -147,6 +148,18 @@ public class CaocConfig implements Serializable {
         this.eventListener = eventListener;
     }
 
+    /**
+     * Sets listener for custom action button. In case of @null hides the button
+     */
+    public void setCustomActionButtonListener(@Nullable CustomActivityOnCrash.CustomActionButtonListener customListener) {
+        this.customListener = customListener;
+    }
+
+    @Nullable
+    public CustomActivityOnCrash.CustomActionButtonListener getCustomActionListener() {
+        return customListener;
+    }
+
     public static class Builder {
         private CaocConfig config;
 
@@ -167,6 +180,7 @@ public class CaocConfig implements Serializable {
             config.errorActivityClass = currentConfig.errorActivityClass;
             config.restartActivityClass = currentConfig.restartActivityClass;
             config.eventListener = currentConfig.eventListener;
+            config.customListener = currentConfig.customListener;
 
             builder.config = config;
 
@@ -309,6 +323,17 @@ public class CaocConfig implements Serializable {
                 throw new IllegalArgumentException("The event listener cannot be an inner or anonymous class, because it will need to be serialized. Change it to a class of its own, or make it a static inner class.");
             } else {
                 config.eventListener = eventListener;
+            }
+            return this;
+        }
+
+        @NonNull
+        public Builder customActionListener(@Nullable CustomActivityOnCrash.CustomActionButtonListener customActionButtonListener) {
+            if (customActionButtonListener != null && customActionButtonListener.getClass().getEnclosingClass() != null &&
+                    !Modifier.isStatic(customActionButtonListener.getClass().getModifiers())) {
+                throw new IllegalArgumentException("The custom event listener cannot be an inner or anonymous class, because it will need to be serialized. Change it to a class of its own, or make it a static inner class.");
+            } else {
+                config.customListener = customActionButtonListener;
             }
             return this;
         }

@@ -697,4 +697,8 @@ public final class CustomActivityOnCrash {
 
         void onCloseAppFromErrorActivity();
     }
+
+    public interface CustomActionButtonListener extends Serializable {
+        void onCustomAction(Activity activity);
+    }
 }
