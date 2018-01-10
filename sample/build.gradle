@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.1"
 
     defaultConfig {
-        applicationId "cat.ereza.customactivityoncrash.sample"
+        applicationId "com.debuggerua.customactivityoncrash.sample"
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 11
